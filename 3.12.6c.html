@@ -1,0 +1,41 @@
+			
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Arcaea Mod Tool (v3.12.6c)</title>
+        <link rel="stylesheet" href="./style.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script type="text/javascript" src="./FileSaver.min.js"></script>
+        <script type="text/javascript" src="./dllpatcher.js"></script>
+        <script type="text/javascript">    
+			window.addEventListener("load", function () {
+                new Patcher("armeabi-v7a/libcocos2dcpp.so", "", [
+                    {
+                        name: "Remove songlist,packlist,unlocks hash check",
+                        tooltip: "Be able to modify songlist, packlist, unlocks with no crashes",
+                        patches: [
+                            {offset: 0x56506C, off: [0x00, 0xBF], on: [0x60, 0xBB]},
+                            {offset: 0x565076, off: [0x00, 0xBF], on: [0x38, 0xBB]}, 
+                            {offset: 0x565080, off: [0x00, 0xBF], on: [0x10, 0xBB]} 
+                        ],
+                    }, //remove hash check from https://github.com/ArcaeaMemory/ArcaeaModder
+                    {
+                        name: "SSL Pinning",
+						tooltip: "Remove SSL Pin and SSL Verification",
+                        patches: [
+                            {offset: 0x7A7326, off: [0xAF, 0xF3, 0x00, 0x80], on: [0x93, 0xF4, 0x9B, 0xFC]},
+                            {offset: 0x90E502, off: [0xAF, 0xF3, 0x00, 0x80], on: [0xDF, 0xF7, 0xBC, 0xF7]}
+                        ]
+                    }
+                ]);
+            });	
+        </script>
+    </head>
+    <body>
+        <h1>ArcaeaModder v2</h1>
+    </body>
+    <footer>
+    </footer>
+</html>
